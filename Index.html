@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolTap - Free Online Tools for Everyday Use</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --light-blue: #93c5fd;
+            --dark-blue: #1e3a8a;
+            --white: #ffffff;
+            --light-gray: #f3f4f6;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            background-color: #f9fafb;
+        }
+        
+        .logo {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .tool-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-tab {
+            transition: all 0.3s;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .category-tab.active {
+            border-bottom: 3px solid var(--primary-blue);
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+        
+        .tool-icon {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        
+        .tool-icon i {
+            color: var(--primary-blue);
+            font-size: 20px;
+        }
+        
+        .category-container {
+            display: none;
+        }
+        
+        .category-container.active {
+            display: block;
+        }
+
+        .hero-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .button-blue {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .button-blue:hover {
+            background-color: var(--dark-blue);
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Hide scrollbar for IE, Edge and Firefox */
+        body {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        
+        @media (max-width: 768px) {
+            .category-tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .tool-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <h1 class="logo text-2xl text-blue-800">ToolTap</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-blue-800">Home</a>
+                    <a href="#tools" class="text-gray-700 hover:text-blue-800">Tools</a>
+                    <a href="#contact" class="text-gray-700 hover:text-blue-800">Contact</a>
+                </nav>
+                <button class="md:hidden focus:outline-none" id="mobileMenuButton">
+                    <i class="fas fa-bars text-gray-700 text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div class="md:hidden hidden" id="mobileMenu">
+                <nav class="flex flex-col space-y-4 mt-4 pb-4">
+                    <a href="#home" class="text-gray-700 hover:text-blue-800">Home</a>
+                    <a href="#tools" class="text-gray-700 hover:text-blue-800">Tools</a>
+                    <a href="#contact" class="text-gray-700 hover:text-blue-800">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative bg-gradient-to-r from-blue-800 to-blue-600 text-white py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">All the tools you need in one place</h1>
+                <p class="text-xl md:text-2xl mb-8">ToolTap provides free online tools for image editing, text manipulation, document conversion, calculations and more.</p>
+                <a href="#tools" class="button-blue inline-block">
+                    Explore Tools <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C-0.21,68,50.89,92.01,124,106.67L321.39,56.44Z" fill="#ffffff"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Our Tools</h2>
+            
+            <!-- Category Tabs -->
+            <div class="category-tabs flex space-x-4 md:space-x-8 overflow-x-auto pb-4 mb-8">
+                <div class="category-tab active px-4 py-2" data-category="image-tools">
+                    <i class="fas fa-image mr-2"></i> Image Tools
+                </div>
+                <div class="category-tab px-4 py-2" data-category="text-tools">
+                    <i class="fas fa-font mr-2"></i> Text Tools
+                </div>
+                <div class="category-tab px-4 py-2" data-category="document-tools">
+                    <i class="fas fa-file-alt mr-2"></i> Document Tools
+                </div>
+                <div class="category-tab px-4 py-2" data-category="finance-calculators">
+                    <i class="fas fa-calculator mr-2"></i> Finance Calculators
+                </div>
+                <div class="category-tab px-4 py-2" data-category="unit-conversion">
+                    <i class="fas fa-exchange-alt mr-2"></i> Unit Conversion
+                </div>
+                <div class="category-tab px-4 py-2" data-category="everyday-calculators">
+                    <i class="fas fa-tools mr-2"></i> Everyday Calculators
+                </div>
+            </div>
+            
+            <!-- Image Tools -->
+            <div class="category-container active" id="image-tools">
+                <h3 class="text-2xl font-semibold mb-6 text-blue-800">Image Tools</h3>
+                <div class="tool-grid grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Image Tool 1 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-compress"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Image Resizer</h4>
+                        <p class="text-gray-600 mb-4">Resize your images to exact dimensions while maintaining quality.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 2 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-file-archive"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Image Compressor</h4>
+                        <p class="text-gray-600 mb-4">Compress JPEG, PNG and WEBP images without losing quality.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 3 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Image to Base64</h4>
+                        <p class="text-gray-600 mb-4">Convert image files to Base64 encoded string for web use.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 4 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Base64 to Image</h4>
+                        <p class="text-gray-600 mb-4">Convert Base64 encoded string back to image file.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 5 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-crop-alt"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Image Cropper</h4>
+                        <p class="text-gray-600 mb-4">Crop any image to your desired dimensions easily.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 6 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-sync"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Image Rotator</h4>
+                        <p class="text-gray-600 mb-4">Rotate and flip your images to the perfect orientation.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 7 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Image Converter</h4>
+                        <p class="text-gray-600 mb-4">Convert between JPG, PNG, WEBP and other formats.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 8 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-eye-dropper"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Image Color Picker</h4>
+                        <p class="text-gray-600 mb-4">Extract color codes from any point in an image.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 9 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-adjust"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Convert to Grayscale</h4>
+                        <p class="text-gray-600 mb-4">Convert color images to black and white (grayscale).</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 10 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-border-style"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Image Border Generator</h4>
+                        <p class="text-gray-600 mb-4">Add customizable borders to your images.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 11 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-file-image"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">WebP Converter</h4>
+                        <p class="text-gray-600 mb-4">Convert images to and from WebP format for better web performance.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 12 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-eraser"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Metadata Remover</h4>
+                        <p class="text-gray-600 mb-4">Remove personal metadata from your images for privacy.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 13 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Sketch Image Tool</h4>
+                        <p class="text-gray-600 mb-4">Convert your photos to sketched drawing effects.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Image Tool 14 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Image to PDF</h4>
+                        <p class="text-gray-600 mb-4">Convert images to PDF documents in seconds.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Text Tools -->
+            <div class="category-container" id="text-tools">
+                <h3 class="text-2xl font-semibold mb-6 text-blue-800">Text Tools</h3>
+                <div class="tool-grid grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Text Tool 1 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Word Counter</h4>
+                        <p class="text-gray-600 mb-4">Count words in your text with detailed statistics.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Text Tool 2 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-text-width"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Character Counter</h4>
+                        <p class="text-gray-600 mb-4">Count characters in your text with and without spaces.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Text Tool 3 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-font"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Letter Counter</h4>
+                        <p class="text-gray-600 mb-4">Count specific letters in your text content.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Text Tool 4 -->
+                    <div class="tool-card bg-white p-6 shadow-md border border-gray-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-align-left"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Sentence Counter</h4>
+                        <p class="text-gray-600 mb-4">Count the number of sentences in your text.</p>
+                        <a href="#" class="text-blue-700 font-medium hover:text-blue-900">Use Tool <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    
+                    <!-- Text Tool 5 -->
+                    <div class="tool-card bg-wh
